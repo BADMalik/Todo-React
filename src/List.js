@@ -12,7 +12,7 @@ const List = ({ list, handleStatus }) => {
               <li className={!prop.done ? "" : "strike"} key={prop.name}>
                 {prop.name}
                 <button onClick={(e) => handleStatus(prop)} className="px-4">
-                  {!prop.done ? "Mark Done" : "Mark Undone"}
+                  {!prop.done ? "✔" : "❌"}
                 </button>
               </li>
             );
