@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.tailwind-form{
+  border: .02rem solid grey;
+  border-radius:1%;
+}
+.tailwind-form:focus {
+  border: .02rem solid grey;
+
+}
+input focus {
+  text-decoration: none;
+}
+.button{
+  padding: 5px 10px;
+  border: 1px solid grey;
+  border-radius:05%;
+  margin:2px;
+}
+.strike{
+  text-decoration:line-through;
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
