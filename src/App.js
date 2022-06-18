@@ -73,7 +73,6 @@ const App = () => {
           <button type="click" onClick={addTodo} className="button">
             Add
           </button>
-          {/* <button type="click" o className="button">Delete</button> */}
         </div>
       </div>
       <div className="grid grid-cols-1">
