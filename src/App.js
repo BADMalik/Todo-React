@@ -8,6 +8,7 @@ const App = () => {
   let [suggestions, setSuggestions] = useState([]);
   let [formInput, setFormInput] = useState("");
   let [todos, setTodos] = useState([]);
+  let [searchCountries, setSearchCountries] = useState(false);
 
   const getCountries = (e) => {
     setFormInput(e);
@@ -23,12 +24,13 @@ const App = () => {
 
   const setFormInputField = (e) => {
     let newData = e.target.value;
+    setSearchCountries(false);
     setFormInput(newData);
   };
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
-      if (formInput) {
+      if (formInput && searchCountries) {
         getCountries(formInput);
       }
     }, 400);
@@ -56,10 +58,14 @@ const App = () => {
       done: false,
     });
     setTodos(todos);
+    setNewDropDown();
+    setFormInput("");
+  };
+
+  const setNewDropDown = () => {
     let newDropDown = suggestions.filter((suggestion) => {
       return suggestion.name.common !== formInput;
     });
-    setFormInput("");
     setSuggestions(newDropDown);
   };
 
@@ -89,6 +95,7 @@ const App = () => {
             type="text"
             onChange={(e) => {
               setFormInput(e.target.value);
+              setSearchCountries(true);
             }}
           ></input>
         </div>

@@ -13,7 +13,10 @@ const Select = (props) => {
         {suggestions.length > 0 &&
           suggestions.map((suggestion) => {
             return (
-              <option value={suggestion.name.common}>
+              <option
+                key={suggestion.name.common}
+                value={suggestion.name.common}
+              >
                 {suggestion.name.common}
               </option>
             );
