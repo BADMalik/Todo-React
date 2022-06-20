@@ -1,31 +1,54 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import List from "./List";
+import Select from "./Select";
 
 const App = () => {
   let [suggestions, setSuggestions] = useState([]);
   let [formInput, setFormInput] = useState("");
   let [todos, setTodos] = useState([]);
 
-  const callAPI = (e) => {
-    setFormInput(e.target.value);
-    setTimeout(() => {
-      axios
-        .get("https://restcountries.com/v3.1/name/" + e.target.value)
-        .then(function (response) {
-          setSuggestions(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }, 1000);
+  const getCountries = (e) => {
+    setFormInput(e);
+    axios
+      .get("https://restcountries.com/v3.1/name/" + e)
+      .then(function (response) {
+        setSuggestions(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
-  const selected = (e) => {
+  const setFormInputField = (e) => {
     let newData = e.target.value;
     setFormInput(newData);
   };
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (formInput) {
+        getCountries(formInput);
+      }
+    }, 400);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [formInput]);
+
+  // const debounce = (func) => {
+  //   let timer;
+  //   return function (...args) {
+  //     const context = this;
+  //     if (timer) clearTimeout(timer);
+  //     timer = setTimeout(() => {
+  //       timer = null;
+  //       func.apply(context, args);
+  //     }, 100);
+  //   };
+  // };
+
+  // const optimizedFn = useCallback(debounce(getCountries), []);
 
   const addTodo = (e) => {
     todos.push({
@@ -37,12 +60,10 @@ const App = () => {
       return suggestion.name.common !== formInput;
     });
     setFormInput("");
-    //  console.log("newDropdown", newDropDown, formInput);
     setSuggestions(newDropDown);
   };
 
   const handleStatus = (e) => {
-    console.log("handle", e);
     let newList = todos.map((todo) => {
       if (todo.name === e.name) {
         return {
@@ -66,7 +87,9 @@ const App = () => {
             value={formInput || ""}
             className="break-after-auto tailwind-form"
             type="text"
-            onChange={callAPI}
+            onChange={(e) => {
+              setFormInput(e.target.value);
+            }}
           ></input>
         </div>
         <div>
@@ -77,25 +100,11 @@ const App = () => {
       </div>
       <div className="grid grid-cols-1">
         <div>
-          <div>
-            <select
-              value={formInput ? formInput : ""}
-              className="px-4 rounded-full"
-              onChange={selected}
-            >
-              <option disabled value="">
-                Please Select a value
-              </option>
-              {suggestions.length > 0 &&
-                suggestions.map((suggestion) => {
-                  return (
-                    <option value={suggestion.name.common}>
-                      {suggestion.name.common}
-                    </option>
-                  );
-                })}
-            </select>
-          </div>
+          <Select
+            formInput={formInput}
+            suggestions={suggestions}
+            setFormInputField={setFormInputField}
+          />
         </div>
       </div>
       <div className="grid grid-cols-1">

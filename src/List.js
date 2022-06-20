@@ -4,18 +4,16 @@ const List = ({ list, handleStatus }) => {
   return (
     <div>
       <ul>
-        {list &&
-          list.length > 0 &&
-          list.map((prop) => {
-            return (
-              <li className={!prop.done ? "" : "strike"} key={prop.name}>
-                {prop.name}
-                <button onClick={(e) => handleStatus(prop)} className="px-4">
-                  {!prop.done ? "✔" : "❌"}
-                </button>
-              </li>
-            );
-          })}
+        {list.map((listItem) => {
+          return (
+            <li className={!listItem.done ? "" : "strike"} key={listItem.name}>
+              {listItem.name}
+              <button onClick={() => handleStatus(listItem)} className="px-4">
+                {!listItem.done ? "✔" : "❌"}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
