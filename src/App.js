@@ -11,7 +11,6 @@ const App = () => {
   let [searchCountries, setSearchCountries] = useState(false);
 
   const getCountries = (e) => {
-    setFormInput(e);
     axios
       .get("https://restcountries.com/v3.1/name/" + e)
       .then(function (response) {
@@ -35,6 +34,7 @@ const App = () => {
       }
     }, 400);
 
+    //why not direct
     return () => clearTimeout(delayDebounceFn);
   }, [formInput]);
 
@@ -82,7 +82,7 @@ const App = () => {
     });
     setTodos(newList);
   };
-
+  console.log(formInput, "PARENT");
   return (
     <div className="App">
       <h3 className="container mx-auto">Bilal's Practise Todo List</h3>

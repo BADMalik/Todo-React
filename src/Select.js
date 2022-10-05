@@ -1,5 +1,8 @@
 const Select = (props) => {
+  console.log(props);
   let { formInput, suggestions, setFormInputField } = props;
+  formInput = 123213;
+  console.log(formInput, "FORMINOPUT");
   return (
     <div>
       <select
